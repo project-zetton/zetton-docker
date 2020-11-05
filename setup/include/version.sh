@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+VERSION_SOURCED=1
+
+TMP_DIR=/tmp
+
+CMAKE_VERSION=3.18
+CMAKE_BUILD=4
