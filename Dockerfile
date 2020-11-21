@@ -63,7 +63,7 @@ RUN rosdep init && \
 RUN apt-get update && \
   if [ "x$ROS_DESKTOP_FULL" = "xtrue" ] ; then \
   apt-get install -q -y \
-  ros-${ROS_DISTRO}-ros-desktop-full ; \
+  ros-${ROS_DISTRO}-desktop-full ; \
   else \
   apt-get install -q -y \
   ros-${ROS_DISTRO}-ros-base \
