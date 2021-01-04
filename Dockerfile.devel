@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=project-zetton/zetton-docker:cuda10.2-cudnn7-trt7.0.0-ubuntu18.04-runtime
+ARG BASE_IMAGE=projectzetton/zetton-docker:cuda10.2-cudnn7-trt7.0.0-ubuntu18.04-runtime
 
 FROM ${BASE_IMAGE}
 

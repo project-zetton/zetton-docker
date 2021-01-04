@@ -18,7 +18,7 @@ cd cmake-"${CMAKE_VERSION}"
 
 # build cmake
 ./bootstrap --system-curl && \
-  make -j && \
+  make && \
   make install && \
   cmake --version && \
   rm -rf /tmp/*

@@ -37,7 +37,7 @@ RUN apt-get update &&\
 # Install CMake
 ARG CMAKE_VERSION=3.19.2
 COPY deps/install_cmake.sh /tmp/
-RUN /tmp/install_cmake.sh "${CMAKE_VERSION}" "${CMAKE_BUILD}"
+RUN /tmp/install_cmake.sh "${CMAKE_VERSION}"
 
 # Install ROS
 ARG ROS_DISTRO=melodic
