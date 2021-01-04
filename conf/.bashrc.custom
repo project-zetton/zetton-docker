@@ -1,0 +1,24 @@
+# Path
+export PATH="${HOME/.local/bin}:${PATH}"
+export LD_LIBRARY_PATH="/usr/local/lib:/usr/lib:${LD_LIBRARY_PATH}"
+
+# ROS
+export ROSCONSOLE_FORMAT='[${severity}][${time}][${node}:${logger}]: ${message}'
+alias rcd='roscd'
+alias e='rosed'
+alias rmk='catkin_make -j8'
+alias rt="catkin_make run_tests"
+alias rcl='catkin_make clean'
+alias rpkg='catkin_create_pkg'
+alias rcore='roscore &'
+alias rl='roslaunch'
+alias rr='rosrun'
+alias rlog="sudo vim ${ROS_ROOT}/config/rosconsole.config"
+
+source /opt/ros/melodic/setup.bash
+
+if [ -f /workspace/install/setup.bash ]; then
+   source /workspace/install/setup.bash
+elif [ -f /workspace/devel/setup.bash ]; then
+   source /workspace/devel/setup.bash
+fi

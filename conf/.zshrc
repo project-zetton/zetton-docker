@@ -14,6 +14,15 @@ plugins=(
 export PATH="${HOME/.local/bin}:${PATH}"
 export LD_LIBRARY_PATH="/usr/local/lib:/usr/lib:${LD_LIBRARY_PATH}"
 
+# tmux
+alias t='tmux'
+alias tls='tmux list-sessions'
+alias tlp='tmux list-panes'
+alias ta='tmux attach -t'
+alias ts='tmux new -s'
+alias tks='tmux kill-session -t'
+alias tkw='tmux kill-window -t'
+
 # ros
 export ROSCONSOLE_FORMAT='[${severity}][${time}][${node}:${logger}]: ${message}'
 alias rcd='roscd'
