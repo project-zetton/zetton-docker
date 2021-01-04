@@ -17,7 +17,7 @@ tar -xzvf cmake-"${CMAKE_VERSION}".tar.gz && \
 cd cmake-"${CMAKE_VERSION}"
 
 # build cmake
-./bootstrap --system-curl && \
+./bootstrap --prefix=/usr/local && \
   make && \
   make install && \
   cmake --version && \
