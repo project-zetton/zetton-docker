@@ -3,6 +3,7 @@
 set -ex
 
 CMAKE_VERSION=${1:-"3.19.2"}
+NUM_THREADS=${2:-1}
 
 # install dependencies for SSL support
 apt-get update && \
@@ -20,7 +21,7 @@ cd cmake-"${CMAKE_VERSION}"
 # build cmake
 ./bootstrap \
   --prefix=/usr/local && \
-  make && \
+  make -j${NUM_THREADS} && \
   make install && \
   cmake --version && \
   rm -rf /tmp/*

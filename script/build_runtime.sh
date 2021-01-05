@@ -7,4 +7,5 @@ docker build \
   -t "${RUNTIME_IMAGE_NAME}" \
   -f Dockerfile \
   --build-arg BASE_IMAGE="${RUNTIME_BASE_IMAGE_NAME}" \
+  --build-arg NUM_THREADS=4 \
   .

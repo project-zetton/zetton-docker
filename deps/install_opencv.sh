@@ -4,6 +4,7 @@ set -ex
 
 OPENCV_VERSION=${1:-"4.4.0"}
 CUDA_ARCH=${2:-"6.1"}
+NUM_THREADS=${3:-1}
 
 # update pre-install apt-get packages
 sudo add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
@@ -104,7 +105,7 @@ cd /tmp || exit && \
   -DOPENCV_ENABLE_NONFREE=ON \
   -DOPENCV_GENERATE_PKGCONFIG=YES \
   .. && \
-  make && \
+  make -j${NUM_THREADS} && \
   make install
 
 apt-get clean && \
