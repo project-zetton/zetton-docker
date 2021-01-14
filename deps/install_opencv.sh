@@ -7,21 +7,21 @@ CUDA_ARCH=${2:-"6.1"}
 NUM_THREADS=${3:-1}
 
 # update pre-install apt-get packages
-sudo add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
-sudo apt-get update
+add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
+apt-get update
 
 # install developer tools
-sudo apt -yq install build-essential checkinstall cmake pkg-config
-sudo apt -yq install git gfortran
+apt -yq install build-essential checkinstall cmake pkg-config
+apt -yq install git gfortran
 
 # install image I/O packages for loading various image file formats from disk
-sudo apt -yq install libjpeg8-dev libjpeg-dev libpng-dev
-sudo apt install libjasper1 libjasper-dev
+apt -yq install libjpeg8-dev libjpeg-dev libpng-dev
+apt install libjasper1 libjasper-dev
 
 #  GTK development library to build Graphical User Interfaces
-sudo apt -y install libgtk-3-dev libtbb-dev qt5-default
+apt -y install libgtk-3-dev libtbb-dev qt5-default
 
-sudo apt-get install -yq \
+apt-get install -yq \
   libglew-dev \
   libtiff5-dev \
   zlib1g-dev \
@@ -31,13 +31,13 @@ sudo apt-get install -yq \
   unzip \
   libgoogle-glog-dev \
   libgflags-dev
-sudo apt-get install -yq \
+apt-get install -yq \
   ffmpeg \
   libavcodec-dev \
   libavformat-dev \
   libavutil-dev \
   libswscale-dev
-sudo apt-get install -yq \
+apt-get install -yq \
   libgstreamer1.0-0 \
   gstreamer1.0-plugins-base \
   gstreamer1.0-plugins-good \
