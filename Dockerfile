@@ -3,11 +3,18 @@ ARG BASE_IMAGE=nvcr.io/nvidia/tensorrt:20.09-py3
 FROM ${BASE_IMAGE}
 LABEL maintainer="xxdsox@gmail.com"
 
-ARG ROS_DISTRO=melodic
-ARG ROS_DESKTOP_FULL=false
-
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
+
+# Enable repository mirrors for China
+ARG USE_MIRROR="true"
+RUN if [ "x${USE_MIRROR}" = "xtrue" ] ; then echo "Use mirrors"; fi
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+RUN if [ "x${USE_MIRROR}" = "xtrue" ] ; then \
+ sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
+ sed -i 's/security.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
+ sed -i 's/http:\/\/mirrors.ustc.edu.cn/https:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list; \
+ fi
 
 # Setup timezone
 ARG LOCAL_TIMEZONE="Asia/Shanghai"
@@ -34,10 +41,12 @@ RUN apt-get update &&\
     apt-get clean && \
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
+ARG NUM_THREADS=1
+
 # Install CMake
 ARG CMAKE_VERSION=3.19.2
 COPY deps/install_cmake.sh /tmp/
-RUN /tmp/install_cmake.sh "${CMAKE_VERSION}"
+RUN /tmp/install_cmake.sh "${CMAKE_VERSION}" "${NUM_THREADS}"
 
 # Install ROS
 ARG ROS_DISTRO=melodic
@@ -48,7 +57,7 @@ RUN /tmp/install_ros.sh "${ROS_DISTRO}"
 ARG OPENCV_VERSION=4.4.0
 ARG OPENCV_CUDA_ARCH=6.1
 COPY deps/install_opencv.sh /tmp/
-RUN /tmp/install_opencv.sh "${OPENCV_VERSION}" "${OPENCV_CUDA_ARCH}"
+RUN /tmp/install_opencv.sh "${OPENCV_VERSION}" "${OPENCV_CUDA_ARCH}" "${NUM_THREADS}"
 
 # Setup dotfiles
 COPY conf/.bashrc.custom /root/

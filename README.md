@@ -1,9 +1,19 @@
 # zetton-docker
 Docker images for development and deployment environment of Project Zetton.
 
-## Build
+## Usage
 
 ### Runtime Images
+
+The `runtime` image provides environments which contains the following packages:
+
+- Ubuntu 18.04
+- CMake 3.19.2
+- ROS Melodic
+- OpenCV 4.4.0
+- CUDA/cuDNN/TensorRT (GPU only)
+
+Build commands:
 
 1. For PC with CPU only
 
@@ -30,6 +40,15 @@ Docker images for development and deployment environment of Project Zetton.
    ```
 
 ### Devel Images
+
+In addition to the packages included in the `runtime` image, the ``devel` image also contains the following features.
+
+- SSH on port `2222` with password in `Dockerfile.devel`
+- yapf/clang-format/clangd
+- Zsh with Oh-My-Zsh
+- Csustom Tmux configuration
+
+Build commands:
 
 1. For PC with CPU only
 
