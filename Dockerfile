@@ -3,11 +3,18 @@ ARG BASE_IMAGE=nvcr.io/nvidia/tensorrt:20.09-py3
 FROM ${BASE_IMAGE}
 LABEL maintainer="xxdsox@gmail.com"
 
-ARG ROS_DISTRO=melodic
-ARG ROS_DESKTOP_FULL=false
-
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
+
+# Enable repository mirrors for China
+ARG USE_MIRROR="true"
+RUN if [ "x${USE_MIRROR}" = "xtrue" ] ; then echo "Use mirrors"; fi
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+RUN if [ "x${USE_MIRROR}" = "xtrue" ] ; then \
+ sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
+ sed -i 's/security.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
+ sed -i 's/http:\/\/mirrors.ustc.edu.cn/https:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list; \
+ fi
 
 # Setup timezone
 ARG LOCAL_TIMEZONE="Asia/Shanghai"
