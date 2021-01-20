@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ "${DOCKER_TAG}" == "cuda11.1-cudnn8-trt7.2.1-ubuntu18.04-runtime" ]
+then
+  export RUNTIME_BASE_IMAGE_NAME="nvcr.io/nvidia/tensorrt:20.11-py3"
+  export RUNTIME_IMAGE_NAME="projectzetton/zetton-docker:cuda11.1-cudnn8-trt7.2.1-ubuntu18.04-runtime"
+  export DEVEL_IMAGE_NAME="projectzetton/zetton-docker:cuda11.1-cudnn8-trt7.2.1-ubuntu18.04-devel"
+elif [ "${DOCKER_TAG}" == "cuda10.2-cudnn7-trt7.0.0-ubuntu18.04-runtime" ]
+then
+  export RUNTIME_BASE_IMAGE_NAME="nvcr.io/nvidia/tensorrt:20.03-py3"
+  export RUNTIME_IMAGE_NAME="projectzetton/zetton-docker:cuda10.2-cudnn7-trt7.0.0-ubuntu18.04-runtime"
+  export DEVEL_IMAGE_NAME="projectzetton/zetton-docker:cuda10.2-cudnn7-trt7.0.0-ubuntu18.04-devel"
+else
+  echo "Unsupported docker tag: ${DOCKER_TAG}"
+  exit 0
+fi
+
+docker build \
+  -t "${RUNTIME_IMAGE_NAME}" \
+  -f Dockerfile \
+  --build-arg BASE_IMAGE="${RUNTIME_BASE_IMAGE_NAME}" \
+  --build-arg NUM_THREADS=4 \
+  --build-arg USE_MIRROR=false \
+  .
+
+docker build \
+  -t "${DEVEL_IMAGE_NAME}" \
+  -f Dockerfile.devel \
+  --build-arg BASE_IMAGE="${RUNTIME_IMAGE_NAME}" \
+  .

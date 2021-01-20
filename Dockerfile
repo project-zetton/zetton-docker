@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=nvcr.io/nvidia/tensorrt:20.09-py3
+ARG BASE_IMAGE=nvcr.io/nvidia/tensorrt:20.03-py3
 
 FROM ${BASE_IMAGE}
 LABEL maintainer="xxdsox@gmail.com"
