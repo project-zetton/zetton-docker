@@ -11,6 +11,10 @@ ARG USE_MIRROR="true"
 RUN if [ "x${USE_MIRROR}" = "xtrue" ] ; then echo "Use mirrors"; fi
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN if [ "x${USE_MIRROR}" = "xtrue" ] ; then \
+ apt update && \
+ apt install -q -y --no-install-recommends ca-certificates && \
+ apt-get clean && \
+ rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \
  sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
  sed -i 's/security.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
  sed -i 's/http:\/\/mirrors.ustc.edu.cn/https:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list; \
@@ -22,7 +26,8 @@ RUN echo ${LOCAL_TIMEZONE} > /etc/timezone && \
   ln -sfn /usr/share/zoneinfo/${LOCAL_TIMEZONE} /etc/localtime && \
   apt-get update && \
   apt-get install -q -y --no-install-recommends expect expect-dev time tzdata apt-utils && \
-  rm -rf /var/lib/apt/lists/*
+  apt-get clean && \
+  rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 # Enable deb-src
 RUN apt-get update && \
