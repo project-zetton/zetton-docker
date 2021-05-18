@@ -10,7 +10,7 @@ apt-get install -q -y --no-install-recommends dirmngr gnupg2 lsb-core
 
 curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | apt-key add -
 if [ "x${USE_MIRROR}" = "xtrue" ] ; then
-  echo "deb https://mirrors.ustc.edu.cn/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list ;
+  echo "deb https://mirrors.sjtug.sjtu.edu.cn/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list ;
 else
   echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros1-latest.list ;
 fi

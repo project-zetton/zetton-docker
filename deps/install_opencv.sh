@@ -54,7 +54,8 @@ apt-get install -yq \
   gstreamer1.0-pulseaudio \
   libgstreamer-plugins-base1.0-dev \
   libgstreamer-plugins-good1.0-dev \
-  libgstreamer-plugins-bad1.0-dev
+  libgstreamer-plugins-bad1.0-dev \
+  libgstrtspserver-1.0-dev
 apt -y install libv4l-dev libdc1394-22-dev
 apt -y install libatlas-base-dev
 apt -y install libfaac-dev libmp3lame-dev libtheora-dev

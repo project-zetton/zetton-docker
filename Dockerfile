@@ -15,9 +15,9 @@ RUN if [ "x${USE_MIRROR}" = "xtrue" ] ; then \
  apt install -q -y --no-install-recommends ca-certificates && \
  apt-get clean && \
  rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \
- sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
- sed -i 's/security.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
- sed -i 's/http:\/\/mirrors.ustc.edu.cn/https:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list; \
+ sed -i 's/archive.ubuntu.com/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list && \
+ sed -i 's/security.ubuntu.com/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list && \
+ sed -i 's/http:\/\/mirrors.sjtug.sjtu.edu.cn/https:\/\/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list; \
  fi
 
 # Setup timezone
@@ -49,17 +49,17 @@ RUN apt-get update &&\
 ARG NUM_THREADS=1
 
 # Install CMake
-ARG CMAKE_VERSION=3.19.2
+ARG CMAKE_VERSION=3.20.2
 COPY deps/install_cmake.sh /tmp/
 RUN /tmp/install_cmake.sh "${CMAKE_VERSION}" "${NUM_THREADS}"
 
 # Install ROS
 ARG ROS_DISTRO=melodic
 COPY deps/install_ros.sh /tmp/
-RUN /tmp/install_ros.sh "${ROS_DISTRO}"
+RUN /tmp/install_ros.sh "${ROS_DISTRO}" "${USE_MIRROR}"
 
 # Install OpenCV
-ARG OPENCV_VERSION=4.4.0
+ARG OPENCV_VERSION=4.5.2
 ARG OPENCV_CUDA_ARCH=6.1
 COPY deps/install_opencv.sh /tmp/
 RUN /tmp/install_opencv.sh "${OPENCV_VERSION}" "${OPENCV_CUDA_ARCH}" "${NUM_THREADS}"
