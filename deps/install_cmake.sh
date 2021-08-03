@@ -19,8 +19,7 @@ tar -xzvf cmake-"${CMAKE_VERSION}".tar.gz && \
 cd cmake-"${CMAKE_VERSION}"
 
 # build cmake
-./bootstrap \
-  --prefix=/usr/local && \
+./bootstrap --prefix=/usr/local --parallel=${NUM_THREADS} && \
   make -j${NUM_THREADS} && \
   make install && \
   cmake --version && \
