@@ -22,15 +22,20 @@ RUN apt-get update && \
   apt-get install -q -y --no-install-recommends python3 python3-pip python3-dev && \
   apt-get clean && \
   rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
-RUN python3 -m pip install -U pip && \
-  python3 -m pip install clang-format yapf
-ARG CLANGD_VERSION=11.0.0
-RUN cd /tmp && \
-  wget https://github.com/clangd/clangd/releases/download/${CLANGD_VERSION}/clangd-linux-${CLANGD_VERSION}.zip && \
-  unzip clangd-linux-${CLANGD_VERSION}.zip && \
-  rsync -avP clangd_${CLANGD_VERSION}/lib/ /usr/local/lib/ && \
-  rsync -avP clangd_${CLANGD_VERSION}/bin/ /usr/local/bin/ && \
-  cd / && rm -rf /tmp/*
+RUN python3 -m pip install -U pip
+# install clangd binary by hand
+# ARG CLANGD_VERSION=11.0.0
+# RUN cd /tmp && \
+#   wget https://github.com/clangd/clangd/releases/download/${CLANGD_VERSION}/clangd-linux-${CLANGD_VERSION}.zip && \
+#   unzip clangd-linux-${CLANGD_VERSION}.zip && \
+#   rsync -avP clangd_${CLANGD_VERSION}/lib/ /usr/local/lib/ && \
+#   rsync -avP clangd_${CLANGD_VERSION}/bin/ /usr/local/bin/ && \
+#   cd / && rm -rf /tmp/*
+# install clangd via apt
+RUN apt-get update && \
+  apt-get install -q -y --no-install-recommends yapf clang-format clangd-10 && \
+  apt-get clean && \
+  rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 # Setup dotfiles
 ARG ROS_DISTRO=melodic
