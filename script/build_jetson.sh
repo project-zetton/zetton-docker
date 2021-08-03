@@ -2,6 +2,7 @@
 
 RUNTIME_BASE_IMAGE_NAME=${RUNTIME_BASE_IMAGE_NAME:-nvcr.io/nvidia/deepstream-l4t:5.1-21.02-base}
 RUNTIME_IMAGE_NAME=${RUNTIME_IMAGE_NAME:-projectzetton/zetton-docker:cuda10.2-cudnn8-trt7.1.3-ubuntu18.04-jetson-runtime}
+DEVEL_IMAGE_NAME=${DEVEL_IMAGE_NAME:-projectzetton/zetton-docker:cuda10.2-cudnn8-trt7.1.3-ubuntu18.04-jetson-devel}
 
 docker build \
   -t "${RUNTIME_IMAGE_NAME}" \
@@ -13,3 +14,8 @@ docker build \
   --build-arg JETSON_L4T_VERSION="r32.5" \
   .
 
+docker build \
+  -t "${DEVEL_IMAGE_NAME}" \
+  -f Dockerfile.devel \
+  --build-arg BASE_IMAGE="${RUNTIME_IMAGE_NAME}" \
+  .
