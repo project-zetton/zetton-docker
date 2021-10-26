@@ -11,8 +11,9 @@ plugins=(
 [ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
 
 # path
-export PATH="${HOME/.local/bin}:${PATH}"
-export LD_LIBRARY_PATH="/usr/local/lib:/usr/lib:${LD_LIBRARY_PATH}"
+export CUDA_HOME=/usr/local/cuda
+export PATH="${HOME/.local/bin}:${PATH}:$CUDA_HOME/bin"
+export LD_LIBRARY_PATH="/usr/local/lib:/usr/lib:${LD_LIBRARY_PATH}:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
 
 # tmux
 alias t='tmux'
