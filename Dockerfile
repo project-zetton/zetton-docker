@@ -8,17 +8,21 @@ ENV LC_ALL C.UTF-8
 
 # Enable repository mirrors for China
 ARG USE_MIRROR="true"
+ARG BUILD_ON_ARM="false"
 RUN if [ "x${USE_MIRROR}" = "xtrue" ] ; then echo "Use mirrors"; fi
+RUN if [ "x${BUILD_ON_ARM}" = "xtrue" ] ; then echo "Build on ARM platform"; fi
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN if [ "x${USE_MIRROR}" = "xtrue" ] ; then \
- apt update && \
- apt install -q -y --no-install-recommends ca-certificates && \
- apt-get clean && \
- rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \
- sed -i 's/archive.ubuntu.com/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list && \
- sed -i 's/security.ubuntu.com/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list && \
- sed -i 's/http:\/\/mirrors.sjtug.sjtu.edu.cn/https:\/\/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list; \
- fi
+  apt-get update && \
+  apt-get install -q -y --no-install-recommends ca-certificates && \
+  apt-get clean && \
+  rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \
+  sed -i 's/ports.ubuntu.com/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list && \
+  sed -i 's/archive.ubuntu.com/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list && \
+  sed -i 's/archive.canonical.com/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list && \
+  sed -i 's/security.ubuntu.com/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list && \
+  sed -i 's/http:\/\/mirrors.sjtug.sjtu.edu.cn/https:\/\/mirrors.sjtug.sjtu.edu.cn/g' /etc/apt/sources.list; \
+  fi
 
 # Setup timezone
 ARG LOCAL_TIMEZONE="Asia/Shanghai"
@@ -38,13 +42,13 @@ RUN sed -i '/^#\sdeb-src /s/^# *//' /etc/apt/sources.list
 
 # Install dependencies for building and development
 RUN apt-get update &&\
-    apt-get install -q -y \
-    build-essential cmake \
-    libsm6 libxext6 libxrender-dev libgl1-mesa-glx software-properties-common \
-    gawk rsync git curl wget tmux zsh vim htop iotop iftop \
-    net-tools gdb && \
-    apt-get clean && \
-    rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
+  apt-get install -q -y \
+  build-essential cmake \
+  libsm6 libxext6 libxrender-dev libgl1-mesa-glx software-properties-common \
+  gawk rsync git curl wget tmux zsh vim htop iotop iftop \
+  net-tools gdb && \
+  apt-get clean && \
+  rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 ARG NUM_THREADS=1
 

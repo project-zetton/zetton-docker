@@ -7,19 +7,19 @@ CUDA_ARCH=${2:-"6.1"}
 NUM_THREADS=${3:-1}
 
 # update pre-install apt-get packages
-add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
+# add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
 apt-get update
 
 # install developer tools
-apt -yq install build-essential checkinstall cmake pkg-config
-apt -yq install git gfortran
+apt-get -yq install build-essential checkinstall cmake pkg-config
+apt-get -yq install git gfortran
 
 # install image I/O packages for loading various image file formats from disk
-apt -yq install libjpeg8-dev libjpeg-dev libpng-dev
-apt install libjasper1 libjasper-dev
+apt-get -yq install libjpeg8-dev libjpeg-dev libpng-dev
+# apt-get install libjasper1 libjasper-dev
 
 #  GTK development library to build Graphical User Interfaces
-apt -y install libgtk-3-dev libtbb-dev qt5-default
+apt-get -y install libgtk-3-dev libtbb-dev qt5-default
 
 apt-get install -yq \
   libglew-dev \
@@ -56,12 +56,12 @@ apt-get install -yq \
   libgstreamer-plugins-good1.0-dev \
   libgstreamer-plugins-bad1.0-dev \
   libgstrtspserver-1.0-dev
-apt -y install libv4l-dev libdc1394-22-dev
-apt -y install libatlas-base-dev
-apt -y install libfaac-dev libmp3lame-dev libtheora-dev
-apt -y install libxvidcore-dev libx264-dev
-apt -y install libopencore-amrnb-dev libopencore-amrwb-dev
-apt -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen x264 v4l-utils
+apt-get -y install libv4l-dev libdc1394-22-dev
+apt-get -y install libatlas-base-dev
+apt-get -y install libfaac-dev libmp3lame-dev libtheora-dev
+apt-get -y install libxvidcore-dev libx264-dev
+apt-get -y install libopencore-amrnb-dev libopencore-amrwb-dev
+apt-get -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen x264 v4l-utils
 apt-get install -yq python-dev python-numpy python-py python-pytest
 apt-get install -yq python3-dev python3-numpy python3-py python3-pytest
 
