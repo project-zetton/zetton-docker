@@ -64,6 +64,11 @@ ARG OPENCV_CUDA_ARCH=6.1
 COPY deps/install_opencv.sh /tmp/
 RUN /tmp/install_opencv.sh "${OPENCV_VERSION}" "${OPENCV_CUDA_ARCH}" "${NUM_THREADS}"
 
+# Install absl from source
+ARG ABSL_VERSION=lts_2021_03_24
+COPY deps/install_absl.sh /tmp/
+RUN /tmp/install_absl.sh "${ABSL_VERSION}" "${NUM_THREADS}"
+
 # Setup dotfiles
 COPY conf/.bashrc.custom /root/
 RUN echo "source ~/.bashrc.custom" >> "$HOME"/.bashrc
