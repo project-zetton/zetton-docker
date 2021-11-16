@@ -52,6 +52,11 @@ RUN apt-get update &&\
 
 ARG NUM_THREADS=1
 
+# Install GCC
+# ARG GCC_VERSION=9
+# COPY deps/install_gcc.sh /tmp/
+# RUN /tmp/install_gcc.sh "${GCC_VERSION}"
+
 # Install CMake
 ARG CMAKE_VERSION=3.20.2
 COPY deps/install_cmake.sh /tmp/
@@ -69,7 +74,7 @@ COPY deps/install_opencv.sh /tmp/
 RUN /tmp/install_opencv.sh "${OPENCV_VERSION}" "${OPENCV_CUDA_ARCH}" "${NUM_THREADS}"
 
 # Install absl from source
-ARG ABSL_VERSION=lts_2021_03_24
+ARG ABSL_VERSION=lts_2021_11_02
 COPY deps/install_absl.sh /tmp/
 RUN /tmp/install_absl.sh "${ABSL_VERSION}" "${NUM_THREADS}"
 

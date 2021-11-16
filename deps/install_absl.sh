@@ -2,7 +2,7 @@
 
 set -ex
 
-ABSL_VERSION=${1:-"lts_2021_03_24"}
+ABSL_VERSION=${1:-"lts_2021_11_02"}
 NUM_THREADS=${2:-1}
 
 # get latest cmake source
@@ -18,4 +18,3 @@ mkdir build && cd build && \
   make install && \
   cd /tmp && \
   rm -rf abseil-cpp
-
