@@ -74,6 +74,8 @@ Build commands:
 
 ### ROS noetic (CPU only)
 
+Build for `linux/amd64` platform:
+
 ```bash
 RUNTIME_BASE_IMAGE_NAME=ubuntu:focal  \
 RUNTIME_IMAGE_NAME=projectzetton/zetton-docker:ubuntu20.04-runtime \
@@ -87,4 +89,18 @@ RUNTIME_IMAGE_NAME=projectzetton/zetton-docker:ubuntu20.04-runtime \
 DEVEL_IMAGE_NAME=projectzetton/zetton-docker:ubuntu20.04-devel \
 DEVEL_IMAGE_ROS_DISTRO=noetic \
 ./script/build_devel.sh
+```
+
+Build for `linux/arm64/v8` platform:
+
+```bash
+RUNTIME_BASE_IMAGE_NAME=arm64v8/ubuntu:focal  \
+RUNTIME_IMAGE_NAME=projectzetton/zetton-docker:ubuntu20.04-arm64v8-runtime \
+RUNTIME_IMAGE_ROS_DISTRO=noetic \
+RUNTIME_IMAGE_CMAKE_VERSION=3.23.2 \
+RUNTIME_IMAGE_OPENCV_VERSION=4.5.2 \
+RUNTIME_IMAGE_ABSL_VERSION=lts_2022_06_23 \
+DEVEL_IMAGE_NAME=projectzetton/zetton-docker:ubuntu20.04-arm64v8-devel \
+DEVEL_IMAGE_ROS_DISTRO=noetic \
+./script/build_arm64v8.sh
 ```
