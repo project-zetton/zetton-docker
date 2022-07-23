@@ -7,7 +7,7 @@ NUM_THREADS=${2:-1}
 
 # install dependencies for SSL support
 apt-get update && \
-  apt-get install zlib1g-dev libssl-dev && \
+  apt-get install -q -y zlib1g-dev libssl-dev && \
   apt-get clean && \
   rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
