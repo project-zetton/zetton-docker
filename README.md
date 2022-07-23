@@ -69,3 +69,22 @@ Build commands:
    ```
 
 3. For Jetson devices: already included in `./script/build_jetson.sh`
+
+## More Examples
+
+### ROS noetic (CPU only)
+
+```bash
+RUNTIME_BASE_IMAGE_NAME=ubuntu:focal  \
+RUNTIME_IMAGE_NAME=projectzetton/zetton-docker:ubuntu20.04-runtime \
+RUNTIME_IMAGE_ROS_DISTRO=noetic \
+RUNTIME_IMAGE_CMAKE_VERSION=3.23.2 \
+RUNTIME_IMAGE_OPENCV_VERSION=4.5.2 \
+RUNTIME_IMAGE_ABSL_VERSION=lts_2022_06_23 \
+./script/build_runtime.sh
+
+RUNTIME_IMAGE_NAME=projectzetton/zetton-docker:ubuntu20.04-runtime \
+DEVEL_IMAGE_NAME=projectzetton/zetton-docker:ubuntu20.04-devel \
+DEVEL_IMAGE_ROS_DISTRO=noetic \
+./script/build_devel.sh
+```
