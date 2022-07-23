@@ -33,9 +33,10 @@ RUN python3 -m pip install -U pip
 #   cd / && rm -rf /tmp/*
 # install clangd via apt
 RUN apt-get update && \
-  for i in yapf yapf3 clang-format clangd ; do \
-    apt-get install -q -y --no-install-recommends $i ; \
-  done && \
+  apt-get install -y --no-install-recommends clang-format isort flake8 && \
+  apt-get install -y --no-install-recommends black || true && \
+  apt-get install -y --no-install-recommends yapf || apt-get install -y --no-install-recommends yapf3 && \
+  apt-get install -y --no-install-recommends clangd || apt-get install -y --no-install-recommends clangd-10 && \
   apt-get clean && \
   rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
