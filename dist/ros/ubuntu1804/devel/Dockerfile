@@ -1,0 +1,18 @@
+ARG IMAGE_NAME
+FROM ${IMAGE_NAME}:vanilla-devel-ubuntu18.04
+
+LABEL maintainer="Yusu Pan <xxdsox@gmail.com>"
+
+# Install ROS
+ARG PACKAGE_VERSION=melodic
+ARG ROS_METAPACKAGE=desktop-full
+ARG ROS_PYTHON=python2
+COPY deps/install_ros.sh /tmp/
+RUN /tmp/install_ros.sh \
+    "${PACKAGE_VERSION}" \
+    "${ROS_METAPACKAGE}" \
+    "${ROS_PYTHON}" \
+    "${USE_MIRROR}"
+
+# Setup dotfiles
+RUN sed -i "s/melodic/${PACKAGE_VERSION}/g" /root/.bashrc.custom

@@ -2,10 +2,10 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="ys"
 
 plugins=(
-  git
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  zsh-completions
+   git
+   zsh-autosuggestions
+   zsh-syntax-highlighting
+   zsh-completions
 )
 
 [ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
@@ -36,7 +36,9 @@ alias rcore='roscore &'
 alias rl='roslaunch'
 alias rr='rosrun'
 alias rlog="sudo vim ${ROS_ROOT}/config/rosconsole.config"
-source /opt/ros/melodic/setup.zsh
+
+export ROS_DISTRO="melodic"
+[ -f /opt/ros/${ROS_DISTRO}/setup.zsh ] && source /opt/ros/${ROS_DISTRO}/setup.zsh
 
 if [ -f /workspace/install/setup.zsh ]; then
    source /workspace/install/setup.zsh
