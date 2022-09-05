@@ -8,7 +8,9 @@ Prebuilt images are shared on [Docker Hub](https://hub.docker.com/r/projectzetto
 ## Build
 
 ```bash
-./build.sh --package-name vanilla  --os ubuntu --os-version 18.04 --arch amd64,arm64 --push
+./build.sh --package-name vanilla --os ubuntu --os-version 18.04 --arch amd64,arm64 --push
+./build.sh --package-name ros --package-version melodic --os ubuntu --os-version 18.04 --arch amd64,arm64 --push
+./build.sh --package-name cuda --package-version 11.6.2 --os ubuntu --os-version 18.04 --arch amd64 --push
 ```
 
 ## Usage
@@ -16,9 +18,9 @@ Prebuilt images are shared on [Docker Hub](https://hub.docker.com/r/projectzetto
 ### Packages
 
 - `vanilla`: pure Ubuntu image with basic tools
-- `ros`: Ubuntu image with ROS installed
+- `ros`: `vanilla` image with ROS installed
 - `cuda`: Ubuntu image with CUDA installed
-- `tensorrt`: Ubuntu image with CUDA and TensorRT installed
+- `tensorrt`: `cuda` image with CUDA and TensorRT installed
 
 ### Categories
 
