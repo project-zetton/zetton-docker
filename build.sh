@@ -20,6 +20,7 @@ BASE_PATH=""
 IMAGE_PREFIX=""
 IMAGE_SUFFIX=""
 NUM_THREADS="1"
+EXTRA_ARGS=""
 
 args=("$@")
 script_name=$(basename $0)
@@ -100,9 +101,10 @@ usage() {
     echo "    --package-name=str    - The package name of image to build for."
     echo "    --package-version=str - The package version of image to build for."
     echo "    --os=str              - The target operating system."
-    echo "    --os-version=str              - The version of target operating system."
+    echo "    --os-version=str      - The version of target operating system."
     echo "    --arch=csv            - Target architectures as a comma separated string."
-    echo "    --num-threads=int     - Number of threads to build dependencies"
+    echo "    --num-threads=int     - Number of threads to build dependencies."
+    echo "    --extra-args=str      - Extra args for building docker image."
     echo
     exit 155
 }
@@ -163,7 +165,7 @@ check_vars() {
     fi
     BASE_PATH="dist/${PACKAGE_NAME}"
     if [[ ! -z ${PACKAGE_VERSION} ]]; then
-        IMAGE_PREFIX="${PACKAGE_NAME}-${PACKAGE_VERSION}"
+        IMAGE_PREFIX="${PACKAGE_NAME}${PACKAGE_VERSION}"
     else
         IMAGE_PREFIX="${PACKAGE_NAME}"
     fi
@@ -226,6 +228,11 @@ main() {
             NUM_THREADS=${args[(($a + 1))]}
             debug "NUM_THREADS=${ARCHES}"
             ((a = a + 1))
+        elif [[ ${args[$a]} == "--extra-args" ]]; then
+            debug "found command '${args[$a]}'"
+            EXTRA_ARGS=${args[(($a + 1))]}
+            debug "EXTRA_ARGS=${ARCHES}"
+            ((a = a + 1))
         else
             err "Unknown argument '${args[$a]}'!"
             usage
@@ -237,35 +244,41 @@ main() {
     # ubuntu 22.04 build require moby/buildkit version greater than 0.8.1
     if ! docker buildx inspect zetton; then
         run_cmd docker buildx create \
-          --use \
-          --platform linux/x86_64,linux/arm64 \
-          --driver-opt image=moby/buildkit:v0.10.3 \
-          --name zetton \
-          --node zetton
+            --use \
+            --platform linux/x86_64,linux/arm64 \
+            --driver-opt image=moby/buildkit:v0.10.3 \
+            --name zetton \
+            --node zetton
     fi
 
     # run_cmd docker build \
     run_cmd docker buildx build ${PULL_ARG} ${LOAD_ARG} ${PUSH_ARG} ${PLATFORM_ARG} \
         -t "${IMAGE_NAME}:${IMAGE_PREFIX}-base-${OS}${OS_VERSION}${IMAGE_SUFFIX:+-${IMAGE_SUFFIX}}" \
+        -f "${BASE_PATH}/${OS_PATH_NAME}/base/Dockerfile" \
         --build-arg "PACKAGE_VERSION=${PACKAGE_VERSION}" \
         --build-arg "NUM_THREADS=8" \
-        -f "${BASE_PATH}/${OS_PATH_NAME}/base/Dockerfile" .
+        ${EXTRA_ARGS} \
+        .
 
     # run_cmd docker build \
     run_cmd docker buildx build ${PULL_ARG} ${LOAD_ARG} ${PUSH_ARG} ${PLATFORM_ARG} \
-         -t "${IMAGE_NAME}:${IMAGE_PREFIX}-runtime-${OS}${OS_VERSION}${IMAGE_SUFFIX:+-${IMAGE_SUFFIX}}" \
+        -t "${IMAGE_NAME}:${IMAGE_PREFIX}-runtime-${OS}${OS_VERSION}${IMAGE_SUFFIX:+-${IMAGE_SUFFIX}}" \
+        -f "${BASE_PATH}/${OS_PATH_NAME}/runtime/Dockerfile" \
         --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
         --build-arg "PACKAGE_VERSION=${PACKAGE_VERSION}" \
         --build-arg "NUM_THREADS=8" \
-        -f "${BASE_PATH}/${OS_PATH_NAME}/runtime/Dockerfile" .
+        ${EXTRA_ARGS} \
+        .
 
     # run_cmd docker build \
     run_cmd docker buildx build ${PULL_ARG} ${LOAD_ARG} ${PUSH_ARG} ${PLATFORM_ARG} \
         -t "${IMAGE_NAME}:${IMAGE_PREFIX}-devel-${OS}${OS_VERSION}${IMAGE_SUFFIX:+-${IMAGE_SUFFIX}}" \
+        -f "${BASE_PATH}/${OS_PATH_NAME}/devel/Dockerfile" \
         --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
         --build-arg "PACKAGE_VERSION=${PACKAGE_VERSION}" \
         --build-arg "NUM_THREADS=8" \
-        -f "${BASE_PATH}/${OS_PATH_NAME}/devel/Dockerfile" .
+        ${EXTRA_ARGS} \
+        .
 
     msg "${script_name} END"
 }
