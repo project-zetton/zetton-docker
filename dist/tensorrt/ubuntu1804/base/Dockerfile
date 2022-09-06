@@ -3,7 +3,7 @@ ARG PACKAGE_VERSION=8.4.3.1
 ARG CUDA_VERSION=11.6.2
 ARG OS_VERSION=ubuntu18.04
 
-FROM ${IMAGE_NAME}:cuda-${CUDA_VERSION}-devel-${OS_VERSION} as base
+FROM ${IMAGE_NAME}:cuda-${CUDA_VERSION}-base-${OS_VERSION} as base
 
 FROM base as base-amd64
 # Set environment and working directory
@@ -25,15 +25,6 @@ LABEL maintainer="Yusu Pan <xxdsox@gmail.com>"
 # Install TensorRT
 COPY deps/install_tensorrt.sh /tmp/
 RUN /tmp/install_tensorrt.sh \
-    && rm -rf /tmp/install_tensorrt.sh ${CUDA_VERSION} ${PACKAGE_VERSION} ${OS_VERSION} ${TARGETARCH}
-
-# Install PyPI packages
-COPY deps/requirements.txt /tmp/requirements.txt
-RUN pip3 install --upgrade pip \
-    && pip3 install setuptools>=41.0.0 \
-    && pip3 install -r /tmp/requirements.txt \
-    && pip3 install jupyter jupyterlab \
-    && RUN pip3 install --upgrade numpy \
-    && rm -rf /tmp/requirements.txt
+    && rm -rf /tmp/install_tensorrt.sh
 
 WORKDIR /
