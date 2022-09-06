@@ -42,8 +42,8 @@ apt-get install -y --no-install-recommends \
     python3-dev \
     python3-wheel &&
     cd /usr/local/bin &&
-    ln -s /usr/bin/python3 python &&
-    ln -s /usr/bin/pip3 pip
+    ln -sf /usr/bin/python3 python &&
+    ln -sf /usr/bin/pip3 pip
 
 # Install TensorRT
 if [ "${CUDA_VERSION}" = "10.2" ]; then
