@@ -4,6 +4,15 @@ set -ex
 
 CUDA_VERSION=${1:-"11.6.2"}
 TRT_VERSION=${2:-"8.4.3.1"}
+OS_VERSION=${2:-"ubuntu18.04"}
+TARGETARCH=${2:-"amd64"}
+
+# Check args
+OS_PATH_NAME="${OS_VERSION}"
+if [[ "${OS_VERSION}" =~ .*\..* ]]; then
+    # delete the dot in os string
+    OS_PATH_NAME="${OS_VERSION//./}"
+fi
 
 # Install requried libraries
 apt-get update && apt-get install -y --no-install-recommends software-properties-common
@@ -39,17 +48,31 @@ apt-get install -y --no-install-recommends \
 # Install TensorRT
 if [ "${CUDA_VERSION}" = "10.2" ]; then
     v="${TRT_VERSION%.*}-1+cuda${CUDA_VERSION}" &&
-        apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub &&
+        apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/${OS_PATH_NAME}/$(uname -m)/3bf863cc.pub &&
         apt-get update &&
-        sudo apt-get install libnvinfer8=${v} libnvonnxparsers8=${v} libnvparsers8=${v} libnvinfer-plugin8=${v} \
-            libnvinfer-dev=${v} libnvonnxparsers-dev=${v} libnvparsers-dev=${v} libnvinfer-plugin-dev=${v} \
+        apt-get install -y --no-install-recommends \
+            libnvinfer8=${v} \
+            libnvonnxparsers8=${v} \
+            libnvparsers8=${v} \
+            libnvinfer-plugin8=${v} \
+            libnvinfer-dev=${v} \
+            libnvonnxparsers-dev=${v} \
+            libnvparsers-dev=${v} \
+            libnvinfer-plugin-dev=${v} \
             python3-libnvinfer=${v}
 else
     v="${TRT_VERSION%.*}-1+cuda${CUDA_VERSION%.*}" &&
-        apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub &&
+        apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/${OS_PATH_NAME}/$(uname -m)/3bf863cc.pub &&
         apt-get update &&
-        sudo apt-get install libnvinfer8=${v} libnvonnxparsers8=${v} libnvparsers8=${v} libnvinfer-plugin8=${v} \
-            libnvinfer-dev=${v} libnvonnxparsers-dev=${v} libnvparsers-dev=${v} libnvinfer-plugin-dev=${v} \
+        sudo apt-get install -y --no-install-recommends \
+            libnvinfer8=${v} \
+            libnvonnxparsers8=${v} \
+            libnvparsers8=${v} \
+            libnvinfer-plugin8=${v} \
+            libnvinfer-dev=${v} \
+            libnvonnxparsers-dev=${v} \
+            libnvparsers-dev=${v} \
+            libnvinfer-plugin-dev=${v} \
             python3-libnvinfer=${v}
 fi
 

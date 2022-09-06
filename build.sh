@@ -251,35 +251,38 @@ main() {
             --node zetton
     fi
 
-    # run_cmd docker build \
-    run_cmd docker buildx build ${PULL_ARG} ${LOAD_ARG} ${PUSH_ARG} ${PLATFORM_ARG} \
-        -t "${IMAGE_NAME}:${IMAGE_PREFIX}-base-${OS}${OS_VERSION}${IMAGE_SUFFIX:+-${IMAGE_SUFFIX}}" \
-        -f "${BASE_PATH}/${OS_PATH_NAME}/base/Dockerfile" \
-        --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
-        --build-arg "PACKAGE_VERSION=${PACKAGE_VERSION}" \
-        --build-arg "NUM_THREADS=8" \
-        ${EXTRA_ARGS} \
-        .
+    # build base image
+    [ -f "${BASE_PATH}/${OS_PATH_NAME}/base/Dockerfile" ] &&
+        run_cmd docker buildx build ${PULL_ARG} ${LOAD_ARG} ${PUSH_ARG} ${PLATFORM_ARG} \
+            -t "${IMAGE_NAME}:${IMAGE_PREFIX}-base-${OS}${OS_VERSION}${IMAGE_SUFFIX:+-${IMAGE_SUFFIX}}" \
+            -f "${BASE_PATH}/${OS_PATH_NAME}/base/Dockerfile" \
+            --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
+            --build-arg "PACKAGE_VERSION=${PACKAGE_VERSION}" \
+            --build-arg "NUM_THREADS=8" \
+            ${EXTRA_ARGS} \
+            .
 
-    # run_cmd docker build \
-    run_cmd docker buildx build ${PULL_ARG} ${LOAD_ARG} ${PUSH_ARG} ${PLATFORM_ARG} \
-        -t "${IMAGE_NAME}:${IMAGE_PREFIX}-runtime-${OS}${OS_VERSION}${IMAGE_SUFFIX:+-${IMAGE_SUFFIX}}" \
-        -f "${BASE_PATH}/${OS_PATH_NAME}/runtime/Dockerfile" \
-        --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
-        --build-arg "PACKAGE_VERSION=${PACKAGE_VERSION}" \
-        --build-arg "NUM_THREADS=8" \
-        ${EXTRA_ARGS} \
-        .
+    # build runtime image
+    [ -f "${BASE_PATH}/${OS_PATH_NAME}/runtime/Dockerfile" ] &&
+        run_cmd docker buildx build ${PULL_ARG} ${LOAD_ARG} ${PUSH_ARG} ${PLATFORM_ARG} \
+            -t "${IMAGE_NAME}:${IMAGE_PREFIX}-runtime-${OS}${OS_VERSION}${IMAGE_SUFFIX:+-${IMAGE_SUFFIX}}" \
+            -f "${BASE_PATH}/${OS_PATH_NAME}/runtime/Dockerfile" \
+            --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
+            --build-arg "PACKAGE_VERSION=${PACKAGE_VERSION}" \
+            --build-arg "NUM_THREADS=8" \
+            ${EXTRA_ARGS} \
+            .
 
-    # run_cmd docker build \
-    run_cmd docker buildx build ${PULL_ARG} ${LOAD_ARG} ${PUSH_ARG} ${PLATFORM_ARG} \
-        -t "${IMAGE_NAME}:${IMAGE_PREFIX}-devel-${OS}${OS_VERSION}${IMAGE_SUFFIX:+-${IMAGE_SUFFIX}}" \
-        -f "${BASE_PATH}/${OS_PATH_NAME}/devel/Dockerfile" \
-        --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
-        --build-arg "PACKAGE_VERSION=${PACKAGE_VERSION}" \
-        --build-arg "NUM_THREADS=8" \
-        ${EXTRA_ARGS} \
-        .
+    # build devel image
+    [ -f "${BASE_PATH}/${OS_PATH_NAME}/devel/Dockerfile" ] &&
+        run_cmd docker buildx build ${PULL_ARG} ${LOAD_ARG} ${PUSH_ARG} ${PLATFORM_ARG} \
+            -t "${IMAGE_NAME}:${IMAGE_PREFIX}-devel-${OS}${OS_VERSION}${IMAGE_SUFFIX:+-${IMAGE_SUFFIX}}" \
+            -f "${BASE_PATH}/${OS_PATH_NAME}/devel/Dockerfile" \
+            --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
+            --build-arg "PACKAGE_VERSION=${PACKAGE_VERSION}" \
+            --build-arg "NUM_THREADS=8" \
+            ${EXTRA_ARGS} \
+            .
 
     msg "${script_name} END"
 }
