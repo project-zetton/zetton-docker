@@ -1,5 +1,6 @@
 ARG IMAGE_NAME
-FROM ${IMAGE_NAME}:vanilla-devel-ubuntu18.04
+ARG OS_VERSION=ubuntu18.04
+FROM ${IMAGE_NAME}:vanilla-devel-${OS_VERSION}
 
 LABEL maintainer="Yusu Pan <xxdsox@gmail.com>"
 

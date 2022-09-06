@@ -165,7 +165,7 @@ check_vars() {
     fi
     BASE_PATH="dist/${PACKAGE_NAME}"
     if [[ ! -z ${PACKAGE_VERSION} ]]; then
-        IMAGE_PREFIX="${PACKAGE_NAME}${PACKAGE_VERSION}"
+        IMAGE_PREFIX="${PACKAGE_NAME}-${PACKAGE_VERSION}"
     else
         IMAGE_PREFIX="${PACKAGE_NAME}"
     fi
@@ -255,6 +255,7 @@ main() {
     run_cmd docker buildx build ${PULL_ARG} ${LOAD_ARG} ${PUSH_ARG} ${PLATFORM_ARG} \
         -t "${IMAGE_NAME}:${IMAGE_PREFIX}-base-${OS}${OS_VERSION}${IMAGE_SUFFIX:+-${IMAGE_SUFFIX}}" \
         -f "${BASE_PATH}/${OS_PATH_NAME}/base/Dockerfile" \
+        --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
         --build-arg "PACKAGE_VERSION=${PACKAGE_VERSION}" \
         --build-arg "NUM_THREADS=8" \
         ${EXTRA_ARGS} \

@@ -1,5 +1,6 @@
 ARG IMAGE_NAME
-FROM ${IMAGE_NAME}:vanilla-base-ubuntu18.04
+ARG OS_VERSION=ubuntu18.04
+FROM ${IMAGE_NAME}:vanilla-runtime-${OS_VERSION}
 
 LABEL maintainer="Yusu Pan <xxdsox@gmail.com>"
 
@@ -15,6 +16,4 @@ RUN /tmp/install_ros.sh \
     "${USE_MIRROR}"
 
 # Setup dotfiles
-COPY conf/.bashrc.custom /root/
-RUN echo "source ~/.bashrc.custom" >> "$HOME"/.bashrc
 RUN sed -i "s/melodic/${PACKAGE_VERSION}/g" /root/.bashrc.custom
