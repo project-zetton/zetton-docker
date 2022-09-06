@@ -33,7 +33,7 @@ RUN pip3 install --upgrade pip \
     && pip3 install setuptools>=41.0.0 \
     && pip3 install -r /tmp/requirements.txt \
     && pip3 install jupyter jupyterlab \
-    && RUN pip3 install --upgrade numpy \
+    && pip3 install --upgrade numpy \
     && rm -rf /tmp/requirements.txt
 
 WORKDIR /
