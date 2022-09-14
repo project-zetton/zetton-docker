@@ -21,12 +21,16 @@ More examples:
 ```bash
 # build vanilla images
 ./build.sh --package-name vanilla --os ubuntu --os-version 18.04 --arch amd64,arm64 --push
-# build ros images
+# build ROS images
 ./build.sh --package-name ros --package-version melodic --os ubuntu --os-version 18.04 --arch amd64,arm64 --push
-# build cuda images
+# build CUDA images
 ./build.sh --package-name cuda --package-version 11.6.2 --os ubuntu --os-version 18.04 --arch amd64 --push
-# build tensorrt images
-./build.sh --package-name tensorrt --package-version 8.4.3.1 --os ubuntu --os-version 18.04 --arch amd64 --push --extra-args "--build-arg CUDA_VERSION=11.6.2"
+# build TensorRT images
+./build.sh --package-name tensorrt --package-version 8.4.3.1 --os ubuntu --os-version 18.04 --arch amd64 --push --extra-args "--build-arg BASE_PACKAGE_VERSION=11.6.2"
+# build ROS images with CUDA
+./build.sh --package-name ros --package-version melodic  --os ubuntu --os-version 18.04 --arch amd64 --push --image-suffix cuda11.6.2 --extra-args "--build-arg BASE_PACKAGE=cuda-11.6.2"
+# build ROS images with TensorRT
+./build.sh --package-name ros --package-version melodic  --os ubuntu --os-version 18.04 --arch amd64 --push --image-suffix tensorrt8.4.3.1 --extra-args "--build-arg BASE_PACKAGE=tensorrt-8.4.3.1"
 ```
 
 See `./build.sh --help` for detailed usage.

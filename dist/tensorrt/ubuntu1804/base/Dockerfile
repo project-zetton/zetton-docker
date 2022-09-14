@@ -1,9 +1,10 @@
 ARG IMAGE_NAME
 ARG PACKAGE_VERSION=8.4.3.1
-ARG CUDA_VERSION=11.6.2
+ARG BASE_PACKAGE=cuda
+ARG BASE_PACKAGE_VERSION=11.6.2
 ARG OS_VERSION=ubuntu18.04
 
-FROM ${IMAGE_NAME}:cuda-${CUDA_VERSION}-base-${OS_VERSION} as base
+FROM ${IMAGE_NAME}:${BASE_PACKAGE}-${BASE_PACKAGE_VERSION}-base-${OS_VERSION} as base
 
 FROM base as base-amd64
 # Set environment and working directory
@@ -24,7 +25,7 @@ LABEL maintainer="Yusu Pan <xxdsox@gmail.com>"
 
 # Install TensorRT
 COPY deps/install_tensorrt.sh /tmp/
-RUN /tmp/install_tensorrt.sh \
+RUN /tmp/install_tensorrt.sh ${BASE_PACKAGE_VERSION} ${PACKAGE_VERSION} ${OS_VERSION} ${TARGETARCH} \
     && rm -rf /tmp/install_tensorrt.sh
 
 WORKDIR /

@@ -104,6 +104,7 @@ usage() {
     echo "    --os-version=str      - The version of target operating system."
     echo "    --arch=csv            - Target architectures as a comma separated string."
     echo "    --num-threads=int     - Number of threads to build dependencies."
+    echo "    --image-suffix=str    - Suffix for built docker image tag."
     echo "    --extra-args=str      - Extra args for building docker image."
     echo
     exit 155
@@ -226,12 +227,17 @@ main() {
         elif [[ ${args[$a]} == "--num-threads" ]]; then
             debug "found command '${args[$a]}'"
             NUM_THREADS=${args[(($a + 1))]}
-            debug "NUM_THREADS=${ARCHES}"
+            debug "NUM_THREADS=${NUM_THREADS}"
+            ((a = a + 1))
+        elif [[ ${args[$a]} == "--image-suffix" ]]; then
+            debug "found command '${args[$a]}'"
+            IMAGE_SUFFIX=${args[(($a + 1))]}
+            debug "IMAGE_SUFFIX=${IMAGE_SUFFIX}"
             ((a = a + 1))
         elif [[ ${args[$a]} == "--extra-args" ]]; then
             debug "found command '${args[$a]}'"
             EXTRA_ARGS=${args[(($a + 1))]}
-            debug "EXTRA_ARGS=${ARCHES}"
+            debug "EXTRA_ARGS=${EXTRA_ARGS}"
             ((a = a + 1))
         else
             err "Unknown argument '${args[$a]}'!"
