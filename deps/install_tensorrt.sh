@@ -4,8 +4,8 @@ set -ex
 
 CUDA_VERSION=${1:-"11.6.2"}
 TRT_VERSION=${2:-"8.4.3.1"}
-OS_VERSION=${2:-"ubuntu18.04"}
-TARGETARCH=${2:-"amd64"}
+OS_VERSION=${3:-"ubuntu18.04"}
+TARGETARCH=${4:-"amd64"}
 
 # Check args
 OS_PATH_NAME="${OS_VERSION}"
