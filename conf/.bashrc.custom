@@ -17,7 +17,7 @@ alias rr='rosrun'
 alias rlog="sudo vim ${ROS_ROOT}/config/rosconsole.config"
 
 export ROS_DISTRO="melodic"
-[ -f /opt/ros/${ROS_DISTRO}/setup.zsh ] && source /opt/ros/${ROS_DISTRO}/setup.zsh
+[ -f /opt/ros/${ROS_DISTRO}/setup.bash ] && source /opt/ros/${ROS_DISTRO}/setup.bash
 
 if [ -f /workspace/install/setup.bash ]; then
    source /workspace/install/setup.bash

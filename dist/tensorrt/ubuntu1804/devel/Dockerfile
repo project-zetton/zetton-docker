@@ -31,7 +31,7 @@ RUN /tmp/install_tensorrt.sh ${BASE_PACKAGE_VERSION} ${PACKAGE_VERSION} ${OS_VER
 # Install PyPI packages
 COPY deps/requirements.txt /tmp/requirements.txt
 RUN pip3 install --upgrade pip \
-    && pip3 install setuptools>=41.0.0 \
+    && pip3 install "setuptools>=41.0.0" \
     && pip3 install -r /tmp/requirements.txt \
     && pip3 install jupyter jupyterlab \
     && pip3 install --upgrade numpy \
