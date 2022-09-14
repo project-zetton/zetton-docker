@@ -19,12 +19,20 @@ ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${TRT_OSSPATH}/build/out:${TRT_LIBPATH}"
 
 FROM base-${TARGETARCH}
 ARG TARGETARCH
+ARG PACKAGE_VERSION
+ARG BASE_PACKAGE
+ARG BASE_PACKAGE_VERSION
+ARG OS_VERSION
 
 LABEL maintainer="Yusu Pan <xxdsox@gmail.com>"
 
 # Install TensorRT
 COPY deps/install_tensorrt.sh /tmp/
 RUN /tmp/install_tensorrt.sh \
+    "${BASE_PACKAGE_VERSION}" \
+    "${PACKAGE_VERSION}" \
+    "${OS_VERSION}" \
+    "${TARGETARCH}" \
     && rm -rf /tmp/install_tensorrt.sh
 
 WORKDIR /
