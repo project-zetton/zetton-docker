@@ -2,7 +2,7 @@
 
 set -ex
 
-CMAKE_VERSION=${1:-"3.19.2"}
+CMAKE_VERSION=${1:-"3.27.8"}
 NUM_THREADS=${2:-1}
 
 # install dependencies for SSL support

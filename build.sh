@@ -252,7 +252,7 @@ main() {
         run_cmd docker buildx create \
             --use \
             --platform linux/x86_64,linux/arm64 \
-            --driver-opt image=moby/buildkit:v0.10.3 \
+            --driver-opt image=moby/buildkit:v0.12.3 \
             --name zetton \
             --node zetton
     fi
